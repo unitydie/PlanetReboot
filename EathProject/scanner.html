@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="nb">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Eco Scanner — Planet Reboot</title>
+    <meta
+      name="description"
+      content="Eco Scanner: velg livsløpet til ting i en sirkulær økonomi — og se en symbolsk effekt på ressurser, CO₂ og tid."
+    />
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="icon" type="image/png" href="./assets/models/planetIco.png" />
+  </head>
+  <body class="page page--scanner">
+    <header class="site-header">
+      <div class="site-header-inner">
+        <a class="brand" href="./index.html">
+          <span class="brand-dot" aria-hidden="true"></span>
+          Planet Reboot
+        </a>
+        <nav class="site-nav" aria-label="Navigasjon">
+          <a class="nav-link" href="./index.html">Hjem</a>
+          <a class="nav-link is-active" href="./scanner.html" aria-current="page">Eco Scanner</a>
+          <a class="nav-link" href="./myth.html">Myte / Sant</a>
+          <a class="nav-link" href="./lab.html">Laboratorium</a>
+          <a class="nav-link" href="./emotions.html">Økospektrum av følelser</a>
+          <a class="nav-link" href="./greenwash.html">Grønnvasking</a>
+          <a class="nav-link" href="./about.html">Om prosjektet</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="page-main scanner-main">
+      <section class="hero scanner-hero">
+        <h1>Eco Scanner</h1>
+        <p class="lead">
+          Dette er ikke en test og ikke en «vurdering av deg». Det er en måte å se hvordan den samme gjenstanden kan leve
+          helt forskjellig — i en engangskultur eller i logikken til sirkulær økonomi.
+        </p>
+      </section>
+
+      <section class="scanner-app" aria-label="Eco Scanner">
+        <div class="scanner-shell" id="ecoScannerApp">
+          <div class="scanner-top">
+            <div class="scanner-step">
+              <div class="scanner-step-label">Produkt</div>
+              <div id="stepText" class="scanner-step-value">1 av 12</div>
+            </div>
+
+            <div class="scanner-score" aria-label="Poeng">
+              <div class="score-pill score-pill--good">
+                <span class="score-label">Sirkulærpoeng</span>
+                <span id="circularPoints" class="score-value">0</span>
+              </div>
+              <div class="score-pill score-pill--bad">
+                <span class="score-label">Avfallspoeng</span>
+                <span id="wastePoints" class="score-value">0</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="scanner-progress" aria-hidden="true">
+            <div id="progressFill" class="scanner-progress-fill"></div>
+          </div>
+
+          <div class="scanner-carousel" id="carousel">
+            <button id="btnPrev" class="btn btn-ghost scanner-arrow" type="button" aria-label="Forrige produkt">←</button>
+
+            <div id="card" class="scanner-card" tabindex="0" role="group" aria-label="Produktkort">
+              <div class="scan-layer" aria-hidden="true">
+                <div class="scan-line"></div>
+              </div>
+
+              <div class="scanner-card-inner">
+                <div class="product-head">
+                  <div id="productTitle" class="product-title"></div>
+                  <div id="productSituation" class="product-situation"></div>
+                </div>
+
+                <div class="choice-block" aria-label="Handlinger">
+                  <div class="choice-label">Velg handling</div>
+                  <div id="choiceButtons" class="choice-buttons" role="list"></div>
+                </div>
+
+                <div id="result" class="result" hidden>
+                  <div class="result-top">
+                    <div id="resultBadge" class="badge" aria-label="Vurdering av valget"></div>
+                    <div id="resultTagline" class="result-tagline"></div>
+                  </div>
+
+                  <div class="impact" aria-label="Påvirkning">
+                    <div class="impact-item">
+                      <div class="impact-label">CO₂</div>
+                      <div id="impactCo2" class="impact-value">0</div>
+                    </div>
+                    <div class="impact-item">
+                      <div class="impact-label">Ressurser</div>
+                      <div id="impactResources" class="impact-value">0</div>
+                    </div>
+                    <div class="impact-item impact-item--good">
+                      <div class="impact-label">År igjen</div>
+                      <div id="impactYears" class="impact-value">0</div>
+                    </div>
+                  </div>
+
+                  <p id="resultExplain" class="result-explain"></p>
+
+                  <div class="story" aria-label="Historie">
+                    <div class="story-tabs" role="tablist" aria-label="Nå eller om 5 år">
+                      <button id="tabNow" class="tab-btn is-active" type="button" role="tab" aria-selected="true">Nå</button>
+                      <button id="tabFuture" class="tab-btn" type="button" role="tab" aria-selected="false">Om 5 år</button>
+                    </div>
+                    <div id="storyText" class="story-text" role="tabpanel"></div>
+                  </div>
+
+                  <div class="result-actions">
+                    <button id="btnNext" class="btn btn-primary" type="button">Neste</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <button id="btnNextNav" class="btn btn-ghost scanner-arrow" type="button" aria-label="Neste produkt">→</button>
+          </div>
+
+          <div class="scanner-bottom">
+            <div class="scanner-hint">Sveip på mobil · Piltaster ← → på PC · Fremdrift lagres</div>
+            <button id="btnReset" class="btn btn-secondary" type="button">Tilbakestill</button>
+          </div>
+
+          <div id="final" class="final" hidden>
+            <div class="final-card">
+              <div class="final-kicker">Ferdig</div>
+              <div id="finalRank" class="final-rank"></div>
+              <p id="finalSummary" class="final-summary"></p>
+
+              <div class="final-metrics" aria-label="Oppsummering">
+                <div class="final-metric">
+                  <div class="final-metric-label">CO₂</div>
+                  <div id="finalCo2" class="final-metric-value">0</div>
+                </div>
+                <div class="final-metric">
+                  <div class="final-metric-label">Ressurser</div>
+                  <div id="finalResources" class="final-metric-value">0</div>
+                </div>
+                <div class="final-metric">
+                  <div class="final-metric-label">År igjen</div>
+                  <div id="finalYears" class="final-metric-value">0</div>
+                </div>
+              </div>
+
+              <div class="final-tips" aria-label="Tips">
+                <div class="final-tips-title">Tre idéer for planen din</div>
+                <ul id="finalTips" class="final-tips-list"></ul>
+              </div>
+
+              <div class="final-actions">
+                <button id="btnDownload" class="btn btn-primary" type="button">Last ned planen min</button>
+                <button id="btnResetFinal" class="btn btn-secondary" type="button">Tilbakestill</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <noscript>
+      <div class="noscript">JavaScript må være aktivert for at Eco Scanner skal fungere.</div>
+    </noscript>
+
+    <script type="module" src="./scanner.js"></script>
+  </body>
+</html>

@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="nb">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sirkulær økonomi — Planet Reboot</title>
+    <meta name="description" content="Minimalistisk WebGL-scene: kosmos, en planet og tilstandsmålere." />
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="icon" type="image/png" href="./assets/models/planetIco.png" />
+    <script
+      src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.8.11/dist/dotlottie-wc.js"
+      type="module"
+    ></script>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.146.0/build/three.module.js"
+        }
+      }
+    </script>
+  </head>
+  <body class="page page--webgl">
+    <header class="site-header">
+      <div class="site-header-inner">
+        <a class="brand" href="./index.html">
+          <span class="brand-dot" aria-hidden="true"></span>
+          Planet Reboot
+        </a>
+        <nav class="site-nav" aria-label="Navigasjon">
+          <a class="nav-link is-active" href="./index.html" aria-current="page">Hjem</a>
+          <a class="nav-link" href="./about.html">Om prosjektet</a>
+        </nav>
+      </div>
+    </header>
+
+    <div id="webgl" aria-hidden="true"></div>
+
+    <div class="hud hud--minimal" aria-label="Statuspanel">
+      <div class="hud-row">
+        <div class="hud-block">
+          <div class="hud-label">Planethelse</div>
+          <div
+            class="hud-bar"
+            role="progressbar"
+            aria-label="Planethelse"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow="80"
+          >
+            <div id="healthFill" class="hud-bar-fill"></div>
+          </div>
+          <div class="hud-value"><span id="healthValue">80</span>/100</div>
+        </div>
+
+        <div class="hud-block">
+          <div class="hud-label">År igjen</div>
+          <div id="yearsValue" class="years">75.0</div>
+          <div class="hud-sub">Avfall: <span id="trashCount">0</span></div>
+        </div>
+      </div>
+
+      <div class="hud-actions" aria-label="Handlinger">
+        <button id="btnPause" class="btn btn-ghost" type="button">Pause rotasjon</button>
+        <button id="btnReset" class="btn btn-primary" type="button">Tilbakestill</button>
+      </div>
+    </div>
+
+    <aside class="side" aria-label="Meny">
+      <button id="tabSpace" class="btn btn-secondary side-tab" type="button" aria-pressed="false">Kosmos</button>
+      <a class="btn btn-secondary side-tab" href="./scanner.html">Eco Scanner</a>
+      <a class="btn btn-secondary side-tab" href="./myth.html">Myte / Sant</a>
+      <a class="btn btn-secondary side-tab" href="./lab.html">Laboratorium</a>
+      <a class="btn btn-secondary side-tab" href="./emotions.html">Økospektrum av følelser</a>
+      <a class="btn btn-secondary side-tab" href="./greenwash.html">Mini-detektiv: grønnvasking</a>
+      <button id="tabPickup" class="btn btn-secondary side-tab" type="button" aria-pressed="false">Forespørsel</button>
+
+      <div id="panelSpace" class="side-panel" hidden>
+        <div class="side-title">Kosmos</div>
+        <div class="side-sub">Klikk på en satellitt for å se data.</div>
+
+        <div class="side-stats">
+          <div class="side-stat">
+            <div class="side-stat-label">Avfall</div>
+            <div id="satDebris" class="side-stat-value">—</div>
+          </div>
+          <div class="side-stat">
+            <div class="side-stat-label">Skade</div>
+            <div id="satHarm" class="side-stat-value">—</div>
+          </div>
+        </div>
+
+        <div id="satImpact" class="side-impact">—</div>
+      </div>
+
+      <div id="panelPickup" class="side-panel" hidden>
+        <div class="side-title">Forespørsel om henting og resirkulering</div>
+        <div class="side-sub">Fyll ut, så lager vi en ferdig forespørsel du kan kopiere eller laste ned.</div>
+
+        <form id="pickupForm" class="pickup" autocomplete="on">
+          <div class="pickup-grid">
+            <label class="field">
+              <span class="field-label">Navn</span>
+              <input class="field-input" name="name" type="text" placeholder="Hvordan skal vi tiltale deg?" required />
+            </label>
+            <label class="field">
+              <span class="field-label">Kontakt</span>
+              <input class="field-input" name="contact" type="text" placeholder="Telefon / Telegram / E-post" required />
+            </label>
+          </div>
+
+          <label class="field">
+            <span class="field-label">Adresse</span>
+            <input class="field-input" name="address" type="text" placeholder="By, gate, husnummer" required />
+          </label>
+
+          <div class="pickup-grid">
+            <label class="field">
+              <span class="field-label">Avfallstype</span>
+              <select class="field-input" name="waste" required>
+                <option value="" selected disabled>Velg</option>
+                <option value="plastic">Plast</option>
+                <option value="paper">Papir/kartong</option>
+                <option value="glass">Glass</option>
+                <option value="metal">Metall</option>
+                <option value="ewaste">Elektronikk</option>
+                <option value="mixed">Blandet</option>
+              </select>
+            </label>
+            <label class="field">
+              <span class="field-label">Mengde</span>
+              <input class="field-input" name="volume" type="text" placeholder="F.eks.: 2 poser" />
+            </label>
+          </div>
+
+          <label class="field">
+            <span class="field-label">Kommentar</span>
+            <textarea
+              class="field-input field-textarea"
+              name="comment"
+              rows="3"
+              placeholder="Når passer det, og hva bør vi vite?"
+            ></textarea>
+          </label>
+
+          <label class="check">
+            <input class="check-input" name="consent" type="checkbox" required />
+            <span class="check-box" aria-hidden="true"></span>
+            <span class="check-text">Jeg samtykker til at opplysningene lagres i nettleseren på denne enheten.</span>
+          </label>
+
+          <div class="pickup-actions">
+            <button class="btn btn-primary" type="submit">Lagre</button>
+            <button id="pickupCopy" class="btn btn-ghost" type="button">Kopier</button>
+            <button id="pickupDownload" class="btn btn-secondary" type="button">Last ned .txt</button>
+          </div>
+
+          <div id="pickupStatus" class="pickup-status" role="status" aria-live="polite"></div>
+        </form>
+      </div>
+    </aside>
+
+    <div id="recycleFx" class="recycle-fx" aria-hidden="true"></div>
+    <div id="consequence" class="consequence" role="status" aria-live="polite" aria-atomic="true">
+      <div id="consequenceCard" class="consequence-card">
+        <div id="consequenceTag" class="consequence-tag"></div>
+        <div id="consequenceText" class="consequence-text"></div>
+      </div>
+    </div>
+
+    <div id="overlayLoading" class="overlay overlay--visible" role="status" aria-live="polite">
+      <div class="overlay-card">
+        <div class="overlay-title">Laster scene…</div>
+        <div class="progress">
+          <div id="loadingBar" class="progress-bar"></div>
+        </div>
+        <div id="loadingText" class="overlay-sub">Forbereder modeller og lys</div>
+      </div>
+    </div>
+
+    <div id="overlayError" class="overlay" role="alertdialog" aria-modal="true" aria-labelledby="errorTitle">
+      <div class="overlay-card">
+        <div id="errorTitle" class="overlay-title">Kunne ikke laste scenen</div>
+        <p id="errorText" class="overlay-sub">3D-scenen kunne ikke lastes. Prøv å oppdatere siden.</p>
+        <div class="overlay-actions">
+          <button id="btnErrorClose" class="btn btn-secondary" type="button">Fortsett</button>
+        </div>
+      </div>
+    </div>
+
+    <noscript>
+      <div class="noscript">JavaScript må være aktivert for å starte 3D-scenen.</div>
+    </noscript>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="nb">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Myte eller sant? — Planet Reboot</title>
+    <meta
+      name="description"
+      content="Quiz «Myte eller sant?»: 10 påstander om avfall, resirkulering og bærekraftige vaner."
+    />
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="icon" type="image/png" href="./assets/models/planetIco.png" />
+  </head>
+  <body class="page page--myth">
+    <header class="site-header">
+      <div class="site-header-inner">
+        <a class="brand" href="./index.html">
+          <span class="brand-dot" aria-hidden="true"></span>
+          Planet Reboot
+        </a>
+        <nav class="site-nav" aria-label="Navigasjon">
+          <a class="nav-link" href="./index.html">Hjem</a>
+          <a class="nav-link" href="./scanner.html">Eco Scanner</a>
+          <a class="nav-link is-active" href="./myth.html" aria-current="page">Myte / Sant</a>
+          <a class="nav-link" href="./lab.html">Laboratorium</a>
+          <a class="nav-link" href="./emotions.html">Økospektrum av følelser</a>
+          <a class="nav-link" href="./greenwash.html">Grønnvasking</a>
+          <a class="nav-link" href="./about.html">Om prosjektet</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="page-main">
+      <section class="hero">
+        <h1>Myte eller sant?</h1>
+        <p class="lead">Test deg selv: 10 påstander om avfall, resirkulering og bærekraftige vaner.</p>
+      </section>
+
+      <section class="scanner-app" aria-label="Quiz: Myte eller sant">
+        <div class="scanner-shell">
+          <div class="scanner-top">
+            <div class="scanner-step">
+              <div class="scanner-step-label">Fremdrift</div>
+              <div id="progressText" class="scanner-step-value">Spørsmål 1 av 10</div>
+            </div>
+            <div class="scanner-score" aria-label="Beste resultat">
+              <div class="score-pill score-pill--good">
+                <span class="score-label">Beste resultat</span>
+                <span id="bestScore" class="score-value">0</span>
+                <span class="score-label">/10</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="scanner-progress" aria-hidden="true">
+            <div id="progressFill" class="scanner-progress-fill"></div>
+          </div>
+
+          <div id="card" class="quiz-card" role="group" aria-label="Påstand">
+            <div id="statement" class="quiz-statement"></div>
+
+            <div class="quiz-answers" aria-label="Svar">
+              <button id="btnMyth" class="btn btn-ghost quiz-answer quiz-answer--myth" type="button">MYTE</button>
+              <button id="btnTruth" class="btn btn-ghost quiz-answer quiz-answer--truth" type="button">SANT</button>
+            </div>
+
+            <div id="review" class="quiz-review" hidden>
+              <div id="reviewStatus" class="quiz-review-status"></div>
+              <div class="quiz-review-row">
+                Riktig svar: <span id="reviewCorrect" class="quiz-review-correct"></span>
+              </div>
+              <div id="reviewExplain" class="quiz-review-explain"></div>
+              <div class="quiz-actions">
+                <button id="btnNext" class="btn btn-primary" type="button">Neste</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="result" class="quiz-result" hidden>
+            <div class="quiz-result-score">Din poengsum: <span id="finalScore">0</span>/10</div>
+            <div id="finalRank" class="quiz-result-rank"></div>
+            <div class="quiz-best">Beste resultat: <span id="finalBest">0</span>/10</div>
+            <div class="quiz-actions">
+              <button id="btnRestart" class="btn btn-primary" type="button">Prøv igjen</button>
+              <a id="btnToMenu" class="btn btn-ghost" href="./index.html">Til menyen</a>
+            </div>
+          </div>
+
+          <div class="scanner-bottom">
+            <div class="scanner-hint">Esc — til menyen</div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <noscript>
+      <div class="noscript">JavaScript må være aktivert for å kjøre quizen.</div>
+    </noscript>
+
+    <script type="module" src="./myth.js"></script>
+  </body>
+</html>

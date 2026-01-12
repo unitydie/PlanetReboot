@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="nb">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mini-detektiv: grønnvasking — Planet Reboot</title>
+    <meta
+      name="description"
+      content="Mini-detektiv: finn grønnvasking. 8 runder, 3 fraser — velg den mest mistenkelige og se hva du bør sjekke."
+    />
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="icon" type="image/png" href="./assets/models/planetIco.png" />
+  </head>
+  <body class="page page--greenwash">
+    <header class="site-header">
+      <div class="site-header-inner">
+        <a class="brand" href="./index.html">
+          <span class="brand-dot" aria-hidden="true"></span>
+          Planet Reboot
+        </a>
+        <nav class="site-nav" aria-label="Navigasjon">
+          <a class="nav-link" href="./index.html">Hjem</a>
+          <a class="nav-link" href="./scanner.html">Eco Scanner</a>
+          <a class="nav-link" href="./myth.html">Myte / Sant</a>
+          <a class="nav-link" href="./lab.html">Laboratorium</a>
+          <a class="nav-link" href="./emotions.html">Økospektrum av følelser</a>
+          <a class="nav-link is-active" href="./greenwash.html" aria-current="page">Grønnvasking</a>
+          <a class="nav-link" href="./about.html">Om prosjektet</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="page-main">
+      <section class="hero" data-reveal>
+        <h1>Mini-detektiv: finn grønnvasking</h1>
+        <p class="lead">I hver runde velger du frasen som virker mest mistenkelig.</p>
+      </section>
+
+      <section class="scanner-app" aria-label="Mini-detektiv: grønnvasking" data-reveal>
+        <div class="scanner-shell" id="greenwashApp">
+          <div class="scanner-top">
+            <div class="scanner-step">
+              <div class="scanner-step-label">Fremdrift</div>
+              <div id="progressText" class="scanner-step-value">Runde 1 av 8</div>
+            </div>
+
+            <div class="scanner-score" aria-label="Beste resultat">
+              <div class="score-pill score-pill--good">
+                <span class="score-label">Beste resultat</span>
+                <span id="bestScore" class="score-value">0</span>
+                <span class="score-label">/8</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="scanner-progress" aria-hidden="true">
+            <div id="progressFill" class="scanner-progress-fill"></div>
+          </div>
+
+          <div id="card" class="quiz-card gw-card" role="group" aria-label="Runde">
+            <div class="gw-prompt">Velg frasen som virker mest mistenkelig (grønnvasking).</div>
+
+            <div id="options" class="gw-options" role="list" aria-label="Alternativer"></div>
+
+            <div id="review" class="quiz-review" hidden>
+              <div id="reviewStatus" class="quiz-review-status"></div>
+
+              <div class="gw-correct">
+                <div class="quiz-review-row">Riktig svar:</div>
+                <div id="reviewCorrectText" class="gw-correct-text"></div>
+              </div>
+
+              <div class="gw-split" aria-label="Forklaring">
+                <div class="gw-block">
+                  <div class="gw-block-title">Røde flagg</div>
+                  <ul id="reviewFlags" class="gw-list"></ul>
+                </div>
+                <div class="gw-block">
+                  <div class="gw-block-title">Hva du bør sjekke</div>
+                  <ul id="reviewChecks" class="gw-list"></ul>
+                </div>
+              </div>
+
+              <div id="reviewExplain" class="quiz-review-explain"></div>
+
+              <div class="quiz-actions">
+                <button id="btnNext" class="btn btn-primary" type="button">Neste</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="result" class="quiz-result gw-result" hidden>
+            <div class="quiz-result-score">Din poengsum: <span id="finalScore">0</span>/8</div>
+            <div id="finalRank" class="quiz-result-rank"></div>
+            <div class="quiz-best">Beste resultat: <span id="finalBest">0</span>/8</div>
+
+            <div class="gw-topflags">
+              <div class="gw-block-title">Topp 3 røde flagg</div>
+              <ol id="finalFlags" class="gw-topflags-list"></ol>
+            </div>
+
+            <div class="quiz-actions">
+              <button id="btnRestart" class="btn btn-primary" type="button">Prøv igjen</button>
+              <a id="btnToMenu" class="btn btn-ghost" href="./index.html">Til menyen</a>
+            </div>
+          </div>
+
+          <div class="scanner-bottom">
+            <div class="scanner-hint">Hint: hvis det ikke finnes fakta og etterprøvbarhet, er det et signal.</div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <noscript>
+      <div class="noscript">JavaScript må være aktivert for at mini-detektiven skal fungere.</div>
+    </noscript>
+
+    <script type="module" src="./greenwash.js"></script>
+  </body>
+</html>

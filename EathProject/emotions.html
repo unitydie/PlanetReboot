@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="nb">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Økospektrum av følelser — Planet Reboot</title>
+    <meta
+      name="description"
+      content="Økospektrum av følelser: støtte og små handlinger i sirkulær-ånd — uten moralisering."
+    />
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="icon" type="image/png" href="./assets/models/planetIco.png" />
+  </head>
+  <body class="page page--emotions">
+    <header class="site-header">
+      <div class="site-header-inner">
+        <a class="brand" href="./index.html">
+          <span class="brand-dot" aria-hidden="true"></span>
+          Planet Reboot
+        </a>
+        <nav class="site-nav" aria-label="Navigasjon">
+          <a class="nav-link" href="./index.html">Hjem</a>
+          <a class="nav-link" href="./scanner.html">Eco Scanner</a>
+          <a class="nav-link" href="./myth.html">Myte / Sant</a>
+          <a class="nav-link" href="./lab.html">Laboratorium</a>
+          <a class="nav-link is-active" href="./emotions.html" aria-current="page">Økospektrum</a>
+          <a class="nav-link" href="./greenwash.html">Grønnvasking</a>
+          <a class="nav-link" href="./about.html">Om prosjektet</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="page-main">
+      <section class="hero" data-reveal>
+        <h1>Økospektrum av følelser</h1>
+        <p class="lead">Økologi handler ikke bare om fakta. Det handler også om følelser. Hva kjenner du på akkurat nå?</p>
+      </section>
+
+      <section class="scanner-app" aria-label="Økospektrum av følelser" data-reveal>
+        <div class="scanner-shell" id="ecoSpectrumApp">
+          <div id="emotionGrid" class="emotion-grid" role="list" aria-label="Velg en følelse">
+            <button class="emotion-card emotion--anxiety" type="button" data-emotion="anxiety" role="listitem" aria-pressed="false">
+              <span class="emotion-icon" aria-hidden="true"></span>
+              <span class="emotion-title">Uro</span>
+            </button>
+            <button class="emotion-card emotion--anger" type="button" data-emotion="anger" role="listitem" aria-pressed="false">
+              <span class="emotion-icon" aria-hidden="true"></span>
+              <span class="emotion-title">Sinne</span>
+            </button>
+            <button class="emotion-card emotion--fatigue" type="button" data-emotion="fatigue" role="listitem" aria-pressed="false">
+              <span class="emotion-icon" aria-hidden="true"></span>
+              <span class="emotion-title">Utmattelse</span>
+            </button>
+            <button class="emotion-card emotion--motivation" type="button" data-emotion="motivation" role="listitem" aria-pressed="false">
+              <span class="emotion-icon" aria-hidden="true"></span>
+              <span class="emotion-title">Motivasjon</span>
+            </button>
+            <button class="emotion-card emotion--apathy" type="button" data-emotion="apathy" role="listitem" aria-pressed="false">
+              <span class="emotion-icon" aria-hidden="true"></span>
+              <span class="emotion-title">Likegyldighet</span>
+            </button>
+          </div>
+
+          <div id="emotionResponse" class="emotion-response" hidden>
+            <div id="emotionValidation" class="emotion-validation"></div>
+            <div class="emotion-tips-title">Tre små grep</div>
+            <ul id="emotionTips" class="emotion-tips" aria-label="Støtte"></ul>
+
+            <div class="emotion-actions" aria-label="Handlinger">
+              <div class="emotion-action">
+                <div class="emotion-action-label">En liten handling i dag</div>
+                <div id="emotionToday" class="emotion-action-text"></div>
+              </div>
+              <div class="emotion-action">
+                <div class="emotion-action-label">En handling denne uken</div>
+                <div id="emotionWeek" class="emotion-action-text"></div>
+              </div>
+            </div>
+
+            <div class="emotion-actions-row" aria-label="Kontroll">
+              <button id="emotionReroll" class="btn btn-ghost" type="button">Gi meg et annet forslag</button>
+              <button id="emotionSave" class="btn btn-primary" type="button">Lagre i planen min</button>
+            </div>
+            <div id="emotionNote" class="emotion-note" role="status" aria-live="polite"></div>
+          </div>
+
+          <div class="emotion-plan">
+            <div class="emotion-plan-head">
+              <div class="emotion-plan-title">Min plan</div>
+              <div class="emotion-plan-sub">Opptil 7 punkter. Lagres på enheten.</div>
+            </div>
+            <ul id="emotionPlanList" class="emotion-plan-list" aria-label="Planliste"></ul>
+            <div class="emotion-plan-actions">
+              <button id="emotionPlanClear" class="btn btn-ghost" type="button">Tøm planen</button>
+              <button id="emotionPlanDownload" class="btn btn-secondary" type="button">Last ned plan .txt</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <noscript>
+      <div class="noscript">JavaScript må være aktivert for at «Økospektrum av følelser» skal fungere.</div>
+    </noscript>
+
+    <script type="module" src="./emotions.js"></script>
+  </body>
+</html>
