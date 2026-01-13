@@ -153,11 +153,24 @@ body {
   border-radius: 999px;
   font-weight: 650;
   font-size: 14px;
-  transition: background 120ms ease, border-color 120ms ease, transform 120ms ease, color 120ms ease;
+  transition:
+    background 120ms ease,
+    border-color 120ms ease,
+    transform 120ms ease,
+    color 120ms ease,
+    box-shadow 180ms ease;
 }
 
 .nav-link:hover {
   background: rgba(255, 255, 255, 0.1);
+}
+
+.site-nav .nav-link:hover,
+.site-nav .nav-link:focus-visible {
+  border-color: rgba(107, 226, 255, 0.36);
+  box-shadow:
+    0 0 0 1px rgba(107, 226, 255, 0.14),
+    0 18px 70px rgba(107, 226, 255, 0.12);
 }
 
 .nav-link:active {
@@ -373,6 +386,55 @@ body {
 .side-tab.is-active {
   background: rgba(107, 226, 255, 0.14);
   border-color: rgba(107, 226, 255, 0.26);
+}
+
+.side-tab:hover,
+.side-tab:focus-visible {
+  background: rgba(107, 226, 255, 0.18);
+  border-color: rgba(107, 226, 255, 0.38);
+  box-shadow:
+    0 0 0 1px rgba(107, 226, 255, 0.14),
+    0 18px 70px rgba(107, 226, 255, 0.12);
+}
+
+.side-tab.is-typing,
+.side-tab.is-typed,
+.site-nav .nav-link.is-typing,
+.site-nav .nav-link.is-typed {
+  text-shadow: 0 0 18px rgba(107, 226, 255, 0.28);
+}
+
+.side-tab.is-typing,
+.side-tab.is-typed,
+.site-nav .nav-link.is-typing,
+.site-nav .nav-link.is-typed {
+  position: relative;
+}
+
+.side-tab.is-typing::after,
+.side-tab.is-typed::after,
+.site-nav .nav-link.is-typing::after,
+.site-nav .nav-link.is-typed::after {
+  content: "▍";
+  margin-left: 2px;
+  opacity: 0.85;
+  animation: caretBlink 900ms steps(1, end) infinite;
+}
+
+@keyframes caretBlink {
+  50% {
+    opacity: 0.12;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .side-tab.is-typing::after,
+  .side-tab.is-typed::after,
+  .site-nav .nav-link.is-typing::after,
+  .site-nav .nav-link.is-typed::after {
+    animation: none;
+    opacity: 0;
+  }
 }
 
 .side-panel {
@@ -1639,7 +1701,11 @@ body {
   cursor: pointer;
   color: var(--text);
   background: rgba(255, 255, 255, 0.1);
-  transition: transform 120ms ease, background 120ms ease, border-color 120ms ease;
+  transition:
+    transform 120ms ease,
+    background 120ms ease,
+    border-color 120ms ease,
+    box-shadow 180ms ease;
 }
 
 .btn:hover {
