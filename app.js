@@ -26,7 +26,7 @@ const DEFAULT_HEALTH = 80;
 const DEFAULT_YEARS = 75;
 const YEARS_MAX = 120;
 const MAX_TRASH_INSTANCES = 600;
-const AUTO_TRASH_INTERVAL_S = 2.0;
+const AUTO_TRASH_INTERVAL_S = 5.0;
 let autoTrashTimer = 0;
 
 // --- DOM ---------------------------------------------------------------------
