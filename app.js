@@ -6,12 +6,14 @@ import { GLTFLoader } from "https://unpkg.com/three@0.146.0/examples/jsm/loaders
 import { mergeBufferGeometries } from "https://unpkg.com/three@0.146.0/examples/jsm/utils/BufferGeometryUtils.js";
 import "./ui.js";
 
-// --- Asset paths (local) ------------------------------------------------------
-const MODEL_PLANET = "./assets/models/planet.glb";
-const MODEL_TRASH = "./assets/models/trash.glb";
-const MODEL_BOTTLE = "./assets/models/bottle.glb";
-const MODEL_GARBAGE = "./assets/models/garbage.glb";
-const MODEL_SPUTNIK = "./assets/models/sputnik.glb";
+// --- Asset paths --------------------------------------------------------------
+const assetUrl = (path) => new URL(path, import.meta.url).href;
+
+const MODEL_PLANET = assetUrl("./assets/models/planet.glb");
+const MODEL_TRASH = assetUrl("./assets/models/trash.glb");
+const MODEL_BOTTLE = assetUrl("./assets/models/bottle.glb");
+const MODEL_GARBAGE = assetUrl("./assets/models/garbage.glb");
+const MODEL_SPUTNIK = assetUrl("./assets/models/sputnik.glb");
 
 // --- Simulation tuning --------------------------------------------------------
 const STORAGE_KEY = "circularSim.min.v1";
