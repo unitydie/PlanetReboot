@@ -26,6 +26,8 @@ const DEFAULT_HEALTH = 80;
 const DEFAULT_YEARS = 75;
 const YEARS_MAX = 120;
 const MAX_TRASH_INSTANCES = 600;
+const AUTO_TRASH_INTERVAL_S = 2.0;
+let autoTrashTimer = 0;
 
 // --- DOM ---------------------------------------------------------------------
 const dom = {
@@ -1627,6 +1629,43 @@ function onSpaceClick(clientX, clientY) {
   if (typeof idx === "number") selectSatellite(idx);
 }
 
+function dropAutoTrash() {
+  if (isTimeUp) return false;
+  if (sceneMode !== "planet") return false;
+  if (!litterMeshes.length || !planetPickMeshes.length) return false;
+
+  const typeCount = Math.max(1, litterMeshes.length);
+  const maxAttempts = 10;
+
+  for (let attempt = 0; attempt < maxAttempts; attempt += 1) {
+    ndc.set(rand(-0.62, 0.62), rand(-0.5, 0.5));
+    raycaster.setFromCamera(ndc, camera);
+    const hits = raycaster.intersectObjects(planetPickMeshes, true);
+    if (!hits.length) continue;
+
+    const hit = hits[0];
+    const pointWorld = hit.point;
+    const normalWorld = hit.face?.normal
+      ? tmpV3d.copy(hit.face.normal).transformDirection(hit.object.matrixWorld)
+      : tmpV3d.copy(pointWorld).normalize();
+
+    const typeIndex = spawnTypeCursor % typeCount;
+    const ok = spawnTrashAtWorldHit(pointWorld, normalWorld, { animate: true, fly: true, typeIndex });
+    if (!ok) continue;
+    spawnTypeCursor += 1;
+
+    state.trashCount = trashActive.length;
+    updateHUD();
+    persistState();
+
+    applySimulationDelta({ healthDelta: -randInt(1, 3), yearsDelta: -rand(0.3, 1.2) });
+    showConsequence({ good: false });
+    return true;
+  }
+
+  return false;
+}
+
 function onAddTrashClick(clientX, clientY) {
   if (isTimeUp) return;
 
@@ -2344,6 +2383,7 @@ function resetSimulation() {
   state.health = DEFAULT_HEALTH;
   state.yearsLeft = DEFAULT_YEARS;
   spawnTypeCursor = 0;
+  autoTrashTimer = 0;
   clearAllTrash();
   hideConsequence();
   updateHUD();
@@ -2475,6 +2515,16 @@ function tick() {
   planetGroup.updateWorldMatrix(true, false);
 
   updateStarTwinkle(clock.elapsedTime);
+
+  if (!isTimeUp && sceneMode === "planet" && litterMeshes.length) {
+    autoTrashTimer += Math.min(dt, 0.25);
+    if (autoTrashTimer >= AUTO_TRASH_INTERVAL_S) {
+      autoTrashTimer %= AUTO_TRASH_INTERVAL_S;
+      dropAutoTrash();
+    }
+  } else {
+    autoTrashTimer = 0;
+  }
 
   if (sceneMode === "space" && !reduceMotion && state.autoRotateEnabled) {
     updateSatellites(dtSim, clock.elapsedTime);
