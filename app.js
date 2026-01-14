@@ -7,13 +7,18 @@ import { mergeBufferGeometries } from "https://unpkg.com/three@0.146.0/examples/
 import "./ui.js";
 
 // --- Asset paths --------------------------------------------------------------
-const assetUrl = (path) => new URL(path, import.meta.url).href;
+const BASE = "/PlanetReboot/";
 
-const MODEL_PLANET = assetUrl("./assets/models/planet.glb");
-const MODEL_TRASH = assetUrl("./assets/models/trash.glb");
-const MODEL_BOTTLE = assetUrl("./assets/models/bottle.glb");
-const MODEL_GARBAGE = assetUrl("./assets/models/garbage.glb");
-const MODEL_SPUTNIK = assetUrl("./assets/models/sputnik.glb");
+const assetUrl = (path) => new URL(path.replace(/^\//, ""), window.location.origin + BASE).href;
+
+// или проще без URL():
+const assetPath = (path) => BASE + path.replace(/^\//, "");
+
+const MODEL_PLANET  = assetPath("assets/models/planet.glb");
+const MODEL_TRASH   = assetPath("assets/models/trash.glb");
+const MODEL_BOTTLE  = assetPath("assets/models/bottle.glb");
+const MODEL_GARBAGE = assetPath("assets/models/garbage.glb");
+const MODEL_SPUTNIK = assetPath("assets/models/sputnik.glb");
 
 // --- Simulation tuning --------------------------------------------------------
 const STORAGE_KEY = "circularSim.min.v1";
