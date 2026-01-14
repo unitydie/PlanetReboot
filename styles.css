@@ -146,42 +146,40 @@ body {
 
 .nav-link {
   text-decoration: none;
-  color: rgba(255, 255, 255, 0.74);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(255, 255, 255, 0.06);
-  padding: 8px 12px;
-  border-radius: 999px;
-  font-weight: 650;
+  color: rgba(255, 255, 255, 0.82);
+  border: 0;
+  background: transparent;
+  padding: 8px 6px;
+  border-radius: 10px;
+  font-weight: 750;
   font-size: 14px;
   transition:
-    background 120ms ease,
-    border-color 120ms ease,
     transform 120ms ease,
     color 120ms ease,
-    box-shadow 180ms ease;
-}
-
-.nav-link:hover {
-  background: rgba(255, 255, 255, 0.1);
+    text-shadow 180ms ease;
 }
 
 .site-nav .nav-link:hover,
 .site-nav .nav-link:focus-visible {
-  border-color: rgba(107, 226, 255, 0.36);
-  box-shadow:
-    0 0 0 1px rgba(107, 226, 255, 0.14),
-    0 18px 70px rgba(107, 226, 255, 0.12);
+  color: rgba(255, 255, 255, 0.98);
+  text-shadow: 0 0 18px rgba(107, 226, 255, 0.26);
 }
 
 .nav-link:active {
   transform: translateY(1px);
 }
 
+.nav-link:focus-visible {
+  outline: none;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 6px;
+}
+
 .nav-link.is-active,
 .nav-link[aria-current="page"] {
-  background: rgba(107, 226, 255, 0.14);
-  border-color: rgba(107, 226, 255, 0.28);
-  color: rgba(255, 255, 255, 0.92);
+  color: rgba(107, 226, 255, 0.98);
+  text-shadow: 0 0 18px rgba(107, 226, 255, 0.22);
 }
 
 .page-main {
@@ -384,17 +382,32 @@ body {
 }
 
 .side-tab.is-active {
-  background: rgba(107, 226, 255, 0.14);
-  border-color: rgba(107, 226, 255, 0.26);
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  color: rgba(107, 226, 255, 0.98);
 }
 
 .side-tab:hover,
 .side-tab:focus-visible {
-  background: rgba(107, 226, 255, 0.18);
-  border-color: rgba(107, 226, 255, 0.38);
-  box-shadow:
-    0 0 0 1px rgba(107, 226, 255, 0.14),
-    0 18px 70px rgba(107, 226, 255, 0.12);
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  color: rgba(255, 255, 255, 0.98);
+  text-shadow: 0 0 18px rgba(107, 226, 255, 0.26);
+}
+
+.side-tab:focus-visible {
+  outline: none;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 6px;
+}
+
+.side .side-tab {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
 }
 
 .side-tab.is-typing,
