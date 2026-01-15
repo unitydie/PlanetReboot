@@ -1418,9 +1418,31 @@ body {
 
   .page--webgl .hud {
     left: calc(12px + var(--safe-left));
-    right: calc(12px + var(--safe-right));
-    width: auto;
-    padding: 12px;
+    right: auto;
+    width: min(360px, calc(100% - (24px + var(--safe-left) + var(--safe-right))));
+    padding: 10px 12px;
+  }
+
+  .page--webgl .hud-row {
+    gap: 10px;
+  }
+
+  .page--webgl .hud-label {
+    font-size: 11px;
+    margin-bottom: 6px;
+  }
+
+  .page--webgl .hud-bar {
+    height: 8px;
+  }
+
+  .page--webgl .years {
+    font-size: 20px;
+  }
+
+  .page--webgl .hud-actions .btn {
+    padding: 9px 12px;
+    font-size: 13px;
   }
 
   .page--webgl .side {
@@ -2438,11 +2460,11 @@ code {
     grid-template-columns: 1fr;
   }
 
-  .hud-row {
-    flex-direction: column;
+  .page--webgl .hud-row {
+    flex-direction: row;
   }
 
-  .hud-actions {
+  .page--webgl .hud-actions {
     justify-content: flex-start;
   }
 
