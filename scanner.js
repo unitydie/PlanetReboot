@@ -817,6 +817,7 @@ const dom = {
   impactCo2: document.getElementById("impactCo2"),
   impactResources: document.getElementById("impactResources"),
   impactYears: document.getElementById("impactYears"),
+  resultMore: document.getElementById("resultMore"),
   resultExplain: document.getElementById("resultExplain"),
   tabNow: document.getElementById("tabNow"),
   tabFuture: document.getElementById("tabFuture"),
@@ -1033,7 +1034,7 @@ function renderFinal() {
 
   if (dom.finalRank) dom.finalRank.textContent = rank;
   if (dom.finalSummary) {
-    dom.finalSummary.textContent = `Sirkulærpoeng ${derived.circularPoints} · Avfallspoeng ${derived.wastePoints}. Dette er ikke en «vurdering», men et kart over vaner: hvor du allerede velger sirkel — og hvor det er enklest å forbedre neste steg.`;
+    dom.finalSummary.textContent = `Sirkulærpoeng: ${derived.circularPoints} · Avfallspoeng: ${derived.wastePoints}. Velg én ting du vil gjøre litt bedre neste gang.`;
   }
 
   if (dom.finalCo2) dom.finalCo2.textContent = fmtSignedInt(derived.totals.co2);

@@ -22,7 +22,6 @@
           <a class="nav-link" href="./index.html">Hjem</a>
           <a class="nav-link" href="./scanner.html">Eco Scanner</a>
           <a class="nav-link" href="./myth.html">Myte / Sant</a>
-          <a class="nav-link" href="./lab.html">Laboratorium</a>
           <a class="nav-link" href="./emotions.html">Økospektrum av følelser</a>
           <a class="nav-link is-active" href="./greenwash.html" aria-current="page">Grønnvasking</a>
           <a class="nav-link" href="./about.html">Om prosjektet</a>
@@ -33,7 +32,7 @@
     <main class="page-main">
       <section class="hero" data-reveal>
         <h1>Mini-detektiv: finn grønnvasking</h1>
-        <p class="lead">I hver runde velger du frasen som virker mest mistenkelig.</p>
+        <p class="lead">8 runder. Velg frasen som virker mest mistenkelig.</p>
       </section>
 
       <section class="scanner-app" aria-label="Mini-detektiv: grønnvasking" data-reveal>
@@ -73,15 +72,20 @@
               <div class="gw-split" aria-label="Forklaring">
                 <div class="gw-block">
                   <div class="gw-block-title">Røde flagg</div>
-                  <ul id="reviewFlags" class="gw-list"></ul>
+                  <div id="reviewFlags" class="chip-row" aria-label="Røde flagg"></div>
                 </div>
                 <div class="gw-block">
-                  <div class="gw-block-title">Hva du bør sjekke</div>
-                  <ul id="reviewChecks" class="gw-list"></ul>
+                  <div class="gw-block-title">Sjekk dette</div>
+                  <div id="reviewChecks" class="chip-row" aria-label="Hva du bør sjekke"></div>
                 </div>
               </div>
 
               <div id="reviewExplain" class="quiz-review-explain"></div>
+
+              <details id="reviewMore" class="accordion">
+                <summary class="accordion-summary">Hvorfor?</summary>
+                <div id="reviewExplainFull" class="accordion-body"></div>
+              </details>
 
               <div class="quiz-actions">
                 <button id="btnNext" class="btn btn-primary" type="button">Neste</button>
@@ -105,9 +109,6 @@
             </div>
           </div>
 
-          <div class="scanner-bottom">
-            <div class="scanner-hint">Hint: hvis det ikke finnes fakta og etterprøvbarhet, er det et signal.</div>
-          </div>
         </div>
       </section>
     </main>

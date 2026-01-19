@@ -6,19 +6,13 @@ import { GLTFLoader } from "https://unpkg.com/three@0.146.0/examples/jsm/loaders
 import { mergeBufferGeometries } from "https://unpkg.com/three@0.146.0/examples/jsm/utils/BufferGeometryUtils.js";
 import "./ui.js";
 
+
 // --- Asset paths --------------------------------------------------------------
-const BASE = "/PlanetReboot/";
-
-const assetUrl = (path) => new URL(path.replace(/^\//, ""), window.location.origin + BASE).href;
-
-// или проще без URL():
-const assetPath = (path) => BASE + path.replace(/^\//, "");
-
-const MODEL_PLANET  = assetPath("assets/models/planet.glb");
-const MODEL_TRASH   = assetPath("assets/models/trash.glb");
-const MODEL_BOTTLE  = assetPath("assets/models/bottle.glb");
-const MODEL_GARBAGE = assetPath("assets/models/garbage.glb");
-const MODEL_SPUTNIK = assetPath("assets/models/sputnik.glb");
+const MODEL_PLANET = new URL("./assets/models/planet.glb", import.meta.url).href;
+const MODEL_TRASH = new URL("./assets/models/trash.glb", import.meta.url).href;
+const MODEL_BOTTLE = new URL("./assets/models/bottle.glb", import.meta.url).href;
+const MODEL_GARBAGE = new URL("./assets/models/garbage.glb", import.meta.url).href;
+const MODEL_SPUTNIK = new URL("./assets/models/sputnik.glb", import.meta.url).href;
 
 // --- Simulation tuning --------------------------------------------------------
 const STORAGE_KEY = "circularSim.min.v1";

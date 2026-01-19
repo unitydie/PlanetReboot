@@ -22,7 +22,6 @@
           <a class="nav-link" href="./index.html">Hjem</a>
           <a class="nav-link" href="./scanner.html">Eco Scanner</a>
           <a class="nav-link is-active" href="./myth.html" aria-current="page">Myte / Sant</a>
-          <a class="nav-link" href="./lab.html">Laboratorium</a>
           <a class="nav-link" href="./emotions.html">Økospektrum av følelser</a>
           <a class="nav-link" href="./greenwash.html">Grønnvasking</a>
           <a class="nav-link" href="./about.html">Om prosjektet</a>
@@ -33,7 +32,7 @@
     <main class="page-main">
       <section class="hero">
         <h1>Myte eller sant?</h1>
-        <p class="lead">Test deg selv: 10 påstander om avfall, resirkulering og bærekraftige vaner.</p>
+        <p class="lead">10 kjappe påstander. Velg MYTE eller SANT.</p>
       </section>
 
       <section class="scanner-app" aria-label="Quiz: Myte eller sant">
@@ -48,6 +47,10 @@
                 <span class="score-label">Beste resultat</span>
                 <span id="bestScore" class="score-value">0</span>
                 <span class="score-label">/10</span>
+              </div>
+              <div class="score-pill score-pill--hot" aria-label="Streak">
+                <span class="score-label">På rad</span>
+                <span id="streakValue" class="score-value">0</span>
               </div>
             </div>
           </div>
@@ -70,6 +73,11 @@
                 Riktig svar: <span id="reviewCorrect" class="quiz-review-correct"></span>
               </div>
               <div id="reviewExplain" class="quiz-review-explain"></div>
+
+              <details id="reviewMore" class="accordion">
+                <summary class="accordion-summary">Hvorfor?</summary>
+                <div id="reviewExplainFull" class="accordion-body"></div>
+              </details>
               <div class="quiz-actions">
                 <button id="btnNext" class="btn btn-primary" type="button">Neste</button>
               </div>
@@ -79,7 +87,10 @@
           <div id="result" class="quiz-result" hidden>
             <div class="quiz-result-score">Din poengsum: <span id="finalScore">0</span>/10</div>
             <div id="finalRank" class="quiz-result-rank"></div>
-            <div class="quiz-best">Beste resultat: <span id="finalBest">0</span>/10</div>
+            <div id="finalBadge" class="rank-badge" aria-label="Badge"></div>
+            <div class="quiz-best">
+              Beste resultat: <span id="finalBest">0</span>/10 · Beste streak: <span id="finalBestStreak">0</span>
+            </div>
             <div class="quiz-actions">
               <button id="btnRestart" class="btn btn-primary" type="button">Prøv igjen</button>
               <a id="btnToMenu" class="btn btn-ghost" href="./index.html">Til menyen</a>

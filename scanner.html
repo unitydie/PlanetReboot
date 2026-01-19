@@ -22,7 +22,6 @@
           <a class="nav-link" href="./index.html">Hjem</a>
           <a class="nav-link is-active" href="./scanner.html" aria-current="page">Eco Scanner</a>
           <a class="nav-link" href="./myth.html">Myte / Sant</a>
-          <a class="nav-link" href="./lab.html">Laboratorium</a>
           <a class="nav-link" href="./emotions.html">Økospektrum av følelser</a>
           <a class="nav-link" href="./greenwash.html">Grønnvasking</a>
           <a class="nav-link" href="./about.html">Om prosjektet</a>
@@ -34,8 +33,7 @@
       <section class="hero scanner-hero">
         <h1>Eco Scanner</h1>
         <p class="lead">
-          Dette er ikke en test og ikke en «vurdering av deg». Det er en måte å se hvordan den samme gjenstanden kan leve
-          helt forskjellig — i en engangskultur eller i logikken til sirkulær økonomi.
+          Velg hva du gjør med hvert produkt, og se en enkel effekt på CO₂, ressurser og tid.
         </p>
       </section>
 
@@ -103,15 +101,20 @@
                     </div>
                   </div>
 
-                  <p id="resultExplain" class="result-explain"></p>
+                  <details id="resultMore" class="accordion">
+                    <summary class="accordion-summary">Hvorfor?</summary>
+                    <div class="accordion-body">
+                      <p id="resultExplain" class="result-explain"></p>
 
-                  <div class="story" aria-label="Historie">
-                    <div class="story-tabs" role="tablist" aria-label="Nå eller om 5 år">
-                      <button id="tabNow" class="tab-btn is-active" type="button" role="tab" aria-selected="true">Nå</button>
-                      <button id="tabFuture" class="tab-btn" type="button" role="tab" aria-selected="false">Om 5 år</button>
+                      <div class="story" aria-label="Historie">
+                        <div class="story-tabs" role="tablist" aria-label="Nå eller om 5 år">
+                          <button id="tabNow" class="tab-btn is-active" type="button" role="tab" aria-selected="true">Nå</button>
+                          <button id="tabFuture" class="tab-btn" type="button" role="tab" aria-selected="false">Om 5 år</button>
+                        </div>
+                        <div id="storyText" class="story-text" role="tabpanel"></div>
+                      </div>
                     </div>
-                    <div id="storyText" class="story-text" role="tabpanel"></div>
-                  </div>
+                  </details>
 
                   <div class="result-actions">
                     <button id="btnNext" class="btn btn-primary" type="button">Neste</button>

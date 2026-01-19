@@ -1,4 +1,7 @@
+import "./ui.js";
+
 const BEST_KEY = "mythTruthBestScore";
+const BEST_STREAK_KEY = "mythTruthBestStreak";
 const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
 
 const QUESTIONS = [
@@ -83,6 +86,7 @@ const dom = {
   progressText: document.getElementById("progressText"),
   progressFill: document.getElementById("progressFill"),
   bestScore: document.getElementById("bestScore"),
+  streakValue: document.getElementById("streakValue"),
 
   card: document.getElementById("card"),
   statement: document.getElementById("statement"),
@@ -93,12 +97,16 @@ const dom = {
   reviewStatus: document.getElementById("reviewStatus"),
   reviewCorrect: document.getElementById("reviewCorrect"),
   reviewExplain: document.getElementById("reviewExplain"),
+  reviewMore: document.getElementById("reviewMore"),
+  reviewExplainFull: document.getElementById("reviewExplainFull"),
   btnNext: document.getElementById("btnNext"),
 
   result: document.getElementById("result"),
   finalScore: document.getElementById("finalScore"),
   finalRank: document.getElementById("finalRank"),
   finalBest: document.getElementById("finalBest"),
+  finalBadge: document.getElementById("finalBadge"),
+  finalBestStreak: document.getElementById("finalBestStreak"),
   btnRestart: document.getElementById("btnRestart"),
   btnToMenu: document.getElementById("btnToMenu"),
 };
@@ -125,6 +133,27 @@ function writeBestScore(score) {
   localStorage.setItem(BEST_KEY, String(clamp(score, 0, TOTAL)));
 }
 
+function readBestStreak() {
+  const raw = localStorage.getItem(BEST_STREAK_KEY);
+  const n = Math.round(Number(raw));
+  if (!Number.isFinite(n)) return 0;
+  return clamp(n, 0, TOTAL);
+}
+
+function writeBestStreak(value) {
+  localStorage.setItem(BEST_STREAK_KEY, String(clamp(value, 0, TOTAL)));
+}
+
+function shortenLine(text, maxLen = 120) {
+  const raw = String(text ?? "").replace(/\s+/g, " ").trim();
+  if (!raw) return "";
+  if (raw.length <= maxLen) return raw;
+  const cut = raw.slice(0, maxLen);
+  const lastSpace = cut.lastIndexOf(" ");
+  const out = lastSpace > 60 ? cut.slice(0, lastSpace) : cut;
+  return `${out}…`;
+}
+
 function labelAnswer(id) {
   return id === "myth" ? "MYTE" : "SANT";
 }
@@ -132,14 +161,23 @@ function labelAnswer(id) {
 function getRank(score) {
   if (score <= 3) return "Nybegynner";
   if (score <= 6) return "På vei";
-  if (score <= 8) return "Trygg";
+  if (score <= 8) return "Stødig";
   return "Ekspert";
+}
+
+function getBadge(score) {
+  if (score <= 3) return "Starter";
+  if (score <= 6) return "På sporet";
+  if (score <= 8) return "Myteknuser";
+  return "Fakta";
 }
 
 const state = {
   deck: [],
   index: 0,
   score: 0,
+  streak: 0,
+  bestStreak: readBestStreak(),
   answered: false,
   best: readBestScore(),
 };
@@ -155,6 +193,7 @@ function animateEnter(el) {
 function renderBest() {
   if (dom.bestScore) dom.bestScore.textContent = String(state.best);
   if (dom.finalBest) dom.finalBest.textContent = String(state.best);
+  if (dom.finalBestStreak) dom.finalBestStreak.textContent = String(state.bestStreak);
 }
 
 function setAnswerButtonsEnabled(enabled) {
@@ -179,6 +218,8 @@ function renderQuestion() {
 
   if (dom.review) dom.review.hidden = true;
   if (dom.reviewStatus) dom.reviewStatus.classList.remove("is-correct", "is-wrong");
+  if (dom.streakValue) dom.streakValue.textContent = String(state.streak);
+  if (dom.reviewMore) dom.reviewMore.open = false;
 
   animateEnter(dom.card);
 }
@@ -193,6 +234,7 @@ function showResult() {
 
   if (dom.finalScore) dom.finalScore.textContent = String(score);
   if (dom.finalRank) dom.finalRank.textContent = getRank(score);
+  if (dom.finalBadge) dom.finalBadge.textContent = getBadge(score);
 
   if (dom.card) dom.card.hidden = true;
   if (dom.result) dom.result.hidden = false;
@@ -207,7 +249,14 @@ function answer(choice) {
 
   const isCorrect = choice === q.answer;
   state.answered = true;
-  if (isCorrect) state.score += 1;
+  if (isCorrect) {
+    state.score += 1;
+    state.streak += 1;
+    state.bestStreak = Math.max(state.bestStreak, state.streak);
+    writeBestStreak(state.bestStreak);
+  } else {
+    state.streak = 0;
+  }
 
   setAnswerButtonsEnabled(false);
 
@@ -215,14 +264,17 @@ function answer(choice) {
   if (dom.btnNext) dom.btnNext.textContent = isLast ? "Resultat" : "Neste";
 
   if (dom.reviewStatus) {
-    dom.reviewStatus.textContent = isCorrect ? "Riktig!" : "Feil";
+    dom.reviewStatus.textContent = isCorrect ? "Riktig" : "Feil";
     dom.reviewStatus.classList.remove("is-correct", "is-wrong");
     dom.reviewStatus.classList.add(isCorrect ? "is-correct" : "is-wrong");
   }
 
   if (dom.reviewCorrect) dom.reviewCorrect.textContent = labelAnswer(q.answer);
-  if (dom.reviewExplain) dom.reviewExplain.textContent = q.explanation;
+  if (dom.reviewExplain) dom.reviewExplain.textContent = shortenLine(q.explanation);
+  if (dom.reviewExplainFull) dom.reviewExplainFull.textContent = q.explanation;
+  if (dom.reviewMore) dom.reviewMore.open = false;
   if (dom.review) dom.review.hidden = false;
+  if (dom.streakValue) dom.streakValue.textContent = String(state.streak);
 
   dom.btnNext?.focus?.();
 }
@@ -239,6 +291,7 @@ function start() {
   state.deck = shuffleCopy(QUESTIONS);
   state.index = 0;
   state.score = 0;
+  state.streak = 0;
   state.answered = false;
   renderBest();
   renderQuestion();

@@ -1,3 +1,5 @@
+import "./ui.js";
+
 const BEST_KEY = "greenwashDetectiveBest";
 const reduceMotion =
   window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
@@ -141,6 +143,8 @@ const dom = {
   reviewFlags: document.getElementById("reviewFlags"),
   reviewChecks: document.getElementById("reviewChecks"),
   reviewExplain: document.getElementById("reviewExplain"),
+  reviewMore: document.getElementById("reviewMore"),
+  reviewExplainFull: document.getElementById("reviewExplainFull"),
   btnNext: document.getElementById("btnNext"),
 
   result: document.getElementById("result"),
@@ -153,6 +157,45 @@ const dom = {
 };
 
 const clamp = (n, min, max) => Math.min(max, Math.max(min, n));
+
+function shortenLine(text, maxLen = 120) {
+  const raw = String(text ?? "").replace(/\s+/g, " ").trim();
+  if (!raw) return "";
+  if (raw.length <= maxLen) return raw;
+  const cut = raw.slice(0, maxLen);
+  const lastSpace = cut.lastIndexOf(" ");
+  const out = lastSpace > 60 ? cut.slice(0, lastSpace) : cut;
+  return `${out}…`;
+}
+
+function getHintLabels(text) {
+  const t = String(text ?? "").toLowerCase();
+  const labels = [];
+  const hasDigits = /\d/.test(t) || t.includes("%");
+  const hasVerify =
+    t.includes("sertifikat") ||
+    t.includes("verif") ||
+    t.includes("rapport") ||
+    t.includes("metod") ||
+    t.includes("bereg") ||
+    t.includes("kilde") ||
+    t.includes("data");
+  const hasGreenWords =
+    t.includes("eco") ||
+    t.includes("øko") ||
+    t.includes("grønn") ||
+    t.includes("miljø") ||
+    t.includes("planet") ||
+    t.includes("naturen") ||
+    t.includes("havet") ||
+    t.includes("redder");
+
+  if (hasGreenWords) labels.push("GRØNN");
+  if (hasDigits) labels.push("TALL");
+  if (hasVerify) labels.push("KILDE");
+  if (!labels.length) labels.push("VAG");
+  return labels;
+}
 
 function initReveal() {
   const els = [...document.querySelectorAll("[data-reveal]")];
@@ -227,13 +270,22 @@ function clearList(el) {
   el.innerHTML = "";
 }
 
-function renderList(el, items) {
+function renderChips(el, items, { variant = "neutral", limit = 3 } = {}) {
   if (!el) return;
   clearList(el);
-  for (const text of items) {
-    const li = document.createElement("li");
-    li.textContent = text;
-    el.appendChild(li);
+  const list = Array.isArray(items) ? items.filter(Boolean).slice(0, limit) : [];
+  if (!list.length) {
+    const chip = document.createElement("span");
+    chip.className = "chip chip--muted";
+    chip.textContent = "Ingen";
+    el.appendChild(chip);
+    return;
+  }
+  for (const text of list) {
+    const chip = document.createElement("span");
+    chip.className = `chip chip--${variant}`;
+    chip.textContent = text;
+    el.appendChild(chip);
   }
 }
 
@@ -271,15 +323,30 @@ function renderRound() {
     btn.setAttribute("role", "listitem");
     btn.setAttribute("aria-label", `Alternativ ${letters[i]}`);
 
+    const head = document.createElement("div");
+    head.className = "gw-option-head";
+
     const kicker = document.createElement("div");
     kicker.className = "gw-option-kicker";
     kicker.textContent = `Alternativ ${letters[i]}`;
+
+    const hints = document.createElement("div");
+    hints.className = "gw-option-hints";
+    for (const label of getHintLabels(r.options[i])) {
+      const s = document.createElement("span");
+      s.className = "gw-hint";
+      s.textContent = label;
+      s.setAttribute("aria-hidden", "true");
+      hints.appendChild(s);
+    }
+
+    head.append(kicker, hints);
 
     const text = document.createElement("div");
     text.className = "gw-option-text";
     text.textContent = r.options[i];
 
-    btn.append(kicker, text);
+    btn.append(head, text);
     dom.options.appendChild(btn);
   }
 
@@ -309,7 +376,7 @@ function showResult() {
     const flags = topFlags(3);
     if (!flags.length) {
       const li = document.createElement("li");
-      li.textContent = "—";
+      li.textContent = "Ingen røde flagg (enda).";
       dom.finalFlags.appendChild(li);
     } else {
       for (const [flag, count] of flags) {
@@ -345,15 +412,17 @@ function answer(choiceIndex) {
   if (isCorrect) state.score += 1;
 
   if (dom.reviewStatus) {
-    dom.reviewStatus.textContent = isCorrect ? "Riktig!" : "Feil.";
+    dom.reviewStatus.textContent = isCorrect ? "Riktig" : "Feil";
     dom.reviewStatus.classList.remove("is-correct", "is-wrong");
     dom.reviewStatus.classList.add(isCorrect ? "is-correct" : "is-wrong");
   }
 
   if (dom.reviewCorrectText) dom.reviewCorrectText.textContent = r.options[r.correctIndex] ?? "—";
-  renderList(dom.reviewFlags, r.flags);
-  renderList(dom.reviewChecks, r.checks);
-  if (dom.reviewExplain) dom.reviewExplain.textContent = r.explanation;
+  renderChips(dom.reviewFlags, r.flags, { variant: "bad", limit: 3 });
+  renderChips(dom.reviewChecks, r.checks, { variant: "good", limit: 3 });
+  if (dom.reviewExplain) dom.reviewExplain.textContent = shortenLine(r.explanation);
+  if (dom.reviewExplainFull) dom.reviewExplainFull.textContent = r.explanation;
+  if (dom.reviewMore) dom.reviewMore.open = false;
 
   if (dom.options) {
     for (const btn of dom.options.querySelectorAll("button[data-index]")) {
@@ -423,4 +492,3 @@ dom.btnRestart?.addEventListener("click", startNewRun);
 
 initReveal();
 startNewRun();
-
