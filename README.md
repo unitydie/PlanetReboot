@@ -40,7 +40,6 @@ Et interaktivt, statisk webprosjekt om sirkulær økonomi: avfall vs. resirkuler
   - **Forespørsel**: Et skjema for å lage en ferdig henvendelse om henting og resirkulering.
 - **Eco Scanner**: 12 produkter der du velger “livsløp” og ser en symbolsk effekt på CO₂/ressurser/tid.
 - **Myte / Sant**: 10 utsagn om avfall, sortering og vaner med forklaringer etter hvert svar.
-- **Laboratorium**: To lærings‑interaktiver: rekkefølge‑puzzle for sirkularitet + material‑quiz.
 - **Økospektrum av følelser**: Velg en følelse, få små handlinger, og lagre en personlig plan.
 - **Mini‑detektiv: grønnvasking**: Velg den mest mistenkelige reklamefrasen og lær “hva du bør sjekke”.
 - **Om prosjektet**: Bakgrunn, idé og mål med prosjektet.
